@@ -6,6 +6,13 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
+const mongoose = require('./config/mongoose');
+
+const db = mongoose.connection;
+// When successfully connected
+db.on('connected', function() {
+    console.log('Mongo DB connection open for DB');
+});
 
 var index = require('./routes/index');
 var users = require('./routes/users');
