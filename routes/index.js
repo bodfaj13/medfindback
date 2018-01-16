@@ -6,7 +6,7 @@ const Admin = require('../models/adminModel');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'MedFind BackEnd' });
-  console.log(`Lets get started`);
+  // console.log(`Lets get started`);
   var admin = new Admin({
     fullname: 'Bello Ajibola Fuad',
     email: 'bellohargbola13@gmail.com',
