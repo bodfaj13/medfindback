@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const AuthController = require('../controllers/AuthController');
+const AuthControllerPolicy = require('../policies/AuthControllerPolicy');
+const UserMsgController = require('../controllers/UserMsgController');
 const Admin = require('../models/adminModel');
 
 /* GET home page. */
@@ -25,9 +27,12 @@ router.get('/api', (req, res, next)=>{
 })
 
 //registeruser
-router.post('/api/registeruser', AuthController.registerUser);
+router.post('/api/registeruser', AuthControllerPolicy.registerUser,AuthController.registerUser);
 
 //adminlogin
 router.post('/api/login', AuthController.adminLogin);
+
+//user contact message
+router.post('/api/usersendcontact', UserMsgController.sendMsg);
 
 module.exports = router;

@@ -1,7 +1,7 @@
-const User = require('../models/usersModel')
-const Admin = require('../models/adminModel')
+const User = require('../models/usersModel');
+const Admin = require('../models/adminModel');
 const jwt = require('jsonwebtoken');
-const appdetails = require('../config/appdetails.json')
+const appdetails = require('../config/appdetails.json');
 const moment = require('moment');
 const bcrypt = require('bcrypt');
 
