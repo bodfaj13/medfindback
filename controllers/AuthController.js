@@ -27,7 +27,7 @@ module.exports = {
         .then(function (data) {
           console.log(data)
           res.send({
-            success: 'User has been registered successfully'
+            success: 'You have been registered successfully'
           })
         })
         .catch(function (error) {
