@@ -33,6 +33,6 @@ router.post('/api/registeruser', AuthControllerPolicy.registerUser,AuthControlle
 router.post('/api/login', AuthController.adminLogin);
 
 //user contact message
-router.post('/api/usersendcontact', UserMsgController.sendMsg);
+router.post('/api/usersendcontact', AuthControllerPolicy.userSendContact,UserMsgController.sendMsg);
 
 module.exports = router;

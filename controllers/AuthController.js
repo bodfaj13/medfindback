@@ -27,13 +27,13 @@ module.exports = {
         .then(function (data) {
           console.log(data)
           res.send({
-            success: 'You have been registered successfully'
+            success: 'Registration done successfully'
           })
         })
         .catch(function (error) {
           console.log(error.message)
           res.status(400).send({
-            error: error
+            error: error  
           })
         });
       }else{
@@ -60,7 +60,7 @@ module.exports = {
     .then(function (data) {
       if(!data){
         res.status(403).send({
-          error: 'Email not found'
+          error_Email: 'Email not found'
         })
       }else{
         bcrypt.compare(adminDetails.password, data.password, function(err, isMatch){
@@ -70,11 +70,12 @@ module.exports = {
           var token = jwt.sign(tokendata, appdetails.jwtSecret);
           console.log(token)
           res.send({ 
-            token: token
+            token: token,
+            success: 'Authentication Successfull'
           })
           }else{
             res.status(403).send({
-              error: 'Incorect password'
+              error_Password: 'Incorect password'
             })
           }
         });

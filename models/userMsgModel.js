@@ -14,7 +14,7 @@ var userMsgModelSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  createdAt: {
+  sentAt: {
     type: String
   }
 });
