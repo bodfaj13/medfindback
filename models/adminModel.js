@@ -7,18 +7,26 @@ var adminSchema = mongoose.Schema({
     required: true
   },
   email: {
-      type: String,
-      unique: true,
-      required: true
+    type: String,
+    unique: true,
+    required: true
   },
   password: {
-      type: String,
-      required: true,
-      bcrypt: true
+    type: String,
+    required: true,
+    bcrypt: true
   },
   privilege: {
-      type: String,
-      required: true
+    type: String,
+    default: 'global'
+  },
+  stillActive: {
+      type: Boolean,
+      required: true,
+      default: true
+  },
+  createdAt: {
+    type: String
   }
 });
 

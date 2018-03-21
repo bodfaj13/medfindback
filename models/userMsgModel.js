@@ -16,6 +16,11 @@ var userMsgModelSchema = mongoose.Schema({
   },
   sentAt: {
     type: String
+  },
+  markAsRead: {
+    type: Boolean,
+    default: false,
+    require: true
   }
 });
 
