@@ -1,9 +1,6 @@
 var mongoose = require("../config/mongoose");
 var bcrypt = require("bcrypt");
 
-var Schema = mongoose.Schema,
-ObjectId = Schema.ObjectId;
-
 var driverSchema = mongoose.Schema({
   fullname: {
     type: String,
@@ -23,19 +20,23 @@ var driverSchema = mongoose.Schema({
     type: String,
     default: true
   },
-  createdBy: {
-    type: ObjectId
+  onCase: {
+    type: String,
+    default: false
   },
-  createdAt: {
+  createdBy: {
     type: String
   },
-  assignedAmbulance: {
+  createdAt: {
     type: String
   },
   address: {
     type: String
   },
   contact: {
+    type: String
+  },
+  gender: {
     type: String
   }
 });

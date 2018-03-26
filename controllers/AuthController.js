@@ -7,7 +7,7 @@ const moment = require('moment');
 const bcrypt = require('bcrypt');
 
 module.exports = {
-  registerAdmin(req, res, next) {
+  registerAdmin(req, res, next){
     var fullname = req.body.fullname;
     var email = req.body.email;
     var password = req.body.password;
@@ -123,18 +123,56 @@ module.exports = {
             error_Email: "Email not found"
           });
         } else {
-          bcrypt.compare(adminDetails.password, data.password, function(
-            err,
-            isMatch
-          ) {
+          bcrypt.compare(adminDetails.password, data.password, function(err,isMatch) {
             if (err) throw err;
             if (isMatch) {
+              data.password = null;
               var tokendata = JSON.stringify(data);
               var token = jwt.sign(tokendata, appdetails.jwtSecret);
               console.log(token);
               res.send({
                 token: token,
-                success: "Authentication Successfull"
+                success: "Admin Authentication Successfull"
+              });
+            } else {
+              res.status(403).send({
+                error_Password: "Incorect password"
+              });
+            }
+          });
+        }
+      })
+      .catch(function(error) {
+        console.log(error);
+        res.status(400).send(error);
+      });
+  },
+  driverLogin(req, res, next) {
+    var email = req.body.email;
+    var password = req.body.password;
+
+    var driverDetails = {
+      email: email,
+      password: password
+    };
+
+    Driver.findOne({ email: driverDetails.email })
+      .then(function(data) {
+        if (!data) {
+          res.status(403).send({
+            error_Email: "Email not found"
+          });
+        } else {
+          bcrypt.compare(driverDetails.password, data.password, function(err,isMatch) {
+            if (err) throw err;
+            if (isMatch) {
+              data.password = null;
+              var tokendata = JSON.stringify(data);
+              var token = jwt.sign(tokendata, appdetails.jwtSecret);
+              console.log(token);
+              res.send({
+                token: token,
+                success: "Driver Authentication Successfull"
               });
             } else {
               res.status(403).send({
