@@ -1,46 +1,52 @@
 var mongoose = require('../config/mongoose');
 
 var emergencySchema = mongoose.Schema({
-  callername: {
+  callerName: {
     type: String,
     required: true
   },
-  phone: {
+  callerContact: {
     type: String
   },
   liveAtScene: {
-    type: Boolean
-  }
-  currentLocation: {
+    type: Boolean,
+    required: true
+  },
+  emergencyAddress: {
     type: String,
     required: true
+  },
+  addressCords: {
+    lat: String,
+    long: String
   },
   callerIsVictim: {
-    type: Boolean,
-    required: false
+    type: Boolean
   },
   emergencyType: {
-    type: String,
-    required: true
+    type: String
   },
-  numberOfInjured: {
-    type: number,
+  noOfInjured: {
+    type: Number,
     required: true
   },
   ambulanceRequired: {
-    type: number,
-    required: true,
-    default: 1
+    type: Number
   },
   createdAt: {
     type: String
   },
+  lastUpdate: {
+    type: String
+  },
   active: {
     type: Boolean,
-    required: true,
     default: true
+  },
+  note: {
+    type: String
   }
 });
 
-var emergency = mongoose.model('emergencys', emergencySchema);
+var Emergency = mongoose.model('emergencys', emergencySchema);
 module.exports = Emergency

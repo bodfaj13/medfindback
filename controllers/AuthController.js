@@ -1,4 +1,3 @@
-const User = require('../models/usersModel');
 const Admin = require('../models/adminModel');
 const Driver = require('../models/driverModel');
 const jwt = require('jsonwebtoken');
@@ -14,7 +13,7 @@ module.exports = {
     var createdAt = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
 
     var adminDetails = { 
-      fullname: fullname, 
+      fullName: fullname, 
       email: email, 
       password: password, 
       createdAt: createdAt 
@@ -31,7 +30,6 @@ module.exports = {
             admin
               .save()
               .then(function(data) {
-              console.log(data);
               res.send({
                 success: "Registration done successfully",
                 entity: 'admin'
@@ -120,7 +118,7 @@ module.exports = {
       .then(function(data) {
         if (!data) {
           res.status(403).send({
-            error_Email: "Email not found"
+            error_Email: "Email Address not found"
           });
         } else {
           bcrypt.compare(adminDetails.password, data.password, function(err,isMatch) {
@@ -132,11 +130,12 @@ module.exports = {
               console.log(token);
               res.send({
                 token: token,
-                success: "Admin Authentication Successfull"
+                success: "Admin Authentication Successfull",
+                adminDetails: data
               });
             } else {
               res.status(403).send({
-                error_Password: "Incorect password"
+                error_Password: "Incorrect password"
               });
             }
           });

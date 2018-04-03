@@ -2,7 +2,7 @@ var mongoose = require('../config/mongoose');
 var bcrypt = require('bcrypt');
 
 var adminSchema = mongoose.Schema({
-  fullname: {
+  fullName: {
     type: String,
     required: true
   },
