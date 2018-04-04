@@ -25,6 +25,8 @@ module.exports = {
       emergencyAddress: emergencyAddress,
       callerIsVictim: callerIsVictim,
       noOfInjured: noOfInjured,
+      emergencyType: emergencyType,
+      note: note,
       createdAt: createdAt
     };
 
