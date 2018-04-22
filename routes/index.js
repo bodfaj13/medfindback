@@ -6,10 +6,12 @@ const ControllerPolicy = require("../policies/ControllerPolicy");
 const jwt = require("jsonwebtoken");
 const appdetails = require("../config/appdetails.json");
 const FunctionController = require("../controllers/functionController");
+const moment = require('moment');
+const Admin = require('../models/adminModel');
 
 /* GET home page. */
 router.get("/", function(req, res, next) {
-  res.render("index", { title: "MedFind BackEnd" });
+  res.render("index", { title: "ABDS BackEnd" });
   console.log(`Lets get started`);
 });
 
@@ -27,6 +29,9 @@ router.post("/api/driverlogin", AuthController.driverLogin);
 
 //create-emergency
 router.post("/api/recordcallcase", FunctionController.recordCall);
+
+//emergency-to-case
+router.post("/api/createcase", FunctionController.callToCase);
 
 //user contact message
 router.post(
@@ -82,8 +87,7 @@ router.post(
 
 //registerdriver
 router.post(
-  "/api/registerdriver",
-  ControllerPolicy.registerDriver,
+  "/api/registerdriver",ControllerPolicy.registerDriver,
   AuthController.registerDriver
 );
 

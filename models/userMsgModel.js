@@ -1,7 +1,7 @@
 const mongoose = require('../config/mongoose');
 
 var userMsgModelSchema = mongoose.Schema({
-  fullname: {
+  fullName: {
     type: String,
     required: true
   },

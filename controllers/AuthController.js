@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const appdetails = require('../config/appdetails.json');
 const moment = require('moment');
 const bcrypt = require('bcrypt');
+const Ambulance = require('../models/ambulanceModel');
 
 module.exports = {
   registerAdmin(req, res, next){
@@ -32,7 +33,7 @@ module.exports = {
               .then(function(data) {
               res.send({
                 success: "Registration done successfully",
-                entity: 'admin'
+                entity: 'Admin'
               });
             })
             .catch(function(error) {
@@ -54,20 +55,22 @@ module.exports = {
     });
   },
   registerDriver(req, res, next) {
-    var fullname = req.body.fullname;
+    var fullName = req.body.fullName;
     var email = req.body.email;
-    var password = req.body.password;
     var address = req.body.address;
+    var gender = req.body.gender;
+    var password = req.body.password;
     var contact = req.body.contact;
     var createdAt = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
 
     var driverDetails = { 
-      fullname: fullname, 
-      email: email, 
-      password: password, 
-      createdAt: createdAt,
+      fullName: fullName,
+      email: email,
+      gender: gender,
+      password: password,
       contact: contact,
-      address: address
+      address: address,
+      createdAt: createdAt
     };
 
     bcrypt.hash(driverDetails.password, 10, function(err, hash){
@@ -84,7 +87,7 @@ module.exports = {
               console.log(data);
               res.send({
                 success: "Registration done successfully",
-                entity: 'driver'
+                entity: 'Driver'
               });
             })
             .catch(function(error) {

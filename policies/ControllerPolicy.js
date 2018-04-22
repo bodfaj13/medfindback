@@ -4,7 +4,7 @@ module.exports = {
   registerAdmin (req, res, next){
     const schema = {
       email: Joi.string().email(),
-      fullname: Joi.string(),
+      fullName: Joi.string(),
       password: Joi.string()
     }
     const {error, value} = Joi.validate(req.body, schema);
@@ -12,62 +12,17 @@ module.exports = {
       switch(error.details[0].context.key){   
         case 'email':
           res.status(400).send({
-            error_Email: 'Provide a valid email address'
+            error_Email: 'Invalid Email Address supplied'
           })
           break
-        case 'fullname':
+        case 'fullName':
           res.status(400).send({
-            error_Fullname: 'Provide a valid fullname'
-          })
-          break
-        case 'password':
-          res.status(400).send({
-            error_Contact: 'Provide a valid password'
-          })
-          break
-        default:
-          res.status(400).send({
-            error: 'Invalid Registration Supplied'
-          })
-      }
-    }else{
-      next()
-    }
-  },
-  registerDriver (req, res, next){
-    const schema = {
-      email: Joi.string().email(),
-      fullname: Joi.string(),
-      password: Joi.string(),
-      contact: Joi.string(),
-      address: Joi.string()
-    }
-    const {error, value} = Joi.validate(req.body, schema);
-    if(error){
-      switch(error.details[0].context.key){   
-        case 'email':
-          res.status(400).send({
-            error_Email: 'Provide a valid email address'
-          })
-          break
-        case 'fullname':
-          res.status(400).send({
-            error_Fullname: 'Provide a valid fullname'
+            error_Fullname: 'Invalid Fullname supplied'
           })
           break
         case 'password':
           res.status(400).send({
-            error_Password: 'Provide a valid password'
-          })
-          break
-        case 'contact':
-          res.status(400).send({
-            error_Contact: 'Provide a valid contact'
-          })
-          break
-        case 'address':
-          res.status(400).send({
-            error_Address: 'Provide a valid address'
+            error_Password: 'Invalid Password supplied'
           })
           break
         default:
@@ -82,7 +37,7 @@ module.exports = {
   userSendContact (req, res, next){
     const schema = {
       email: Joi.string().email(),
-      fullname: Joi.string(),
+      fullName: Joi.string(),
       message: Joi.string()
     }
     const {error, value} = Joi.validate(req.body, schema);
@@ -90,22 +45,73 @@ module.exports = {
       switch(error.details[0].context.key){   
         case 'email':
           res.status(400).send({
-            error_Email: 'Provide a valid email address'
+            error_Email: 'Invalid Email Address supplied'
           })
           break
         case 'fullname':
           res.status(400).send({
-            error_Fullname: 'Provide a valid fullname'
+            error_Fullname: 'Invalid Fullname supplied'
           })
           break
         case 'contact':
           res.status(400).send({
-            error_Contact: 'Provide a valid message'
+            error_Contact: 'Invalid Message supplied'
           })
           break
         default:
           res.status(400).send({
-            error: 'Invalid Contact Supplied'
+            error: 'Invalid Contact supplied'
+          })
+      }
+    }else{
+      next()
+    }
+  },
+  registerDriver (req, res, next){
+    const schema = {
+      email: Joi.string().email(),
+      fullName: Joi.string(),
+      password: Joi.string(),
+      address: Joi.string(),
+      contact: Joi.string(),
+      gender: Joi.string()
+    }
+    const {error, value} = Joi.validate(req.body, schema);
+    if(error){
+      switch(error.details[0].context.key){   
+        case 'email':
+          res.status(400).send({
+            error_Email: 'Invalid Email Address supplied'
+          })
+          break
+        case 'fullName':
+          res.status(400).send({
+            error_Fullname: 'Invalid Fullname supplied'
+          })
+          break
+        case 'password':
+          res.status(400).send({
+            error_Password: 'Invalid Password supplied'
+          })
+          break
+        case 'address':
+          res.status(400).send({
+            error_Address: 'Invalid   Address supplied'
+          })
+          break
+        case 'gender':
+          res.status(400).send({
+            error_Gender: 'Invalid Gender supplied'
+          })
+          break
+        case 'contact':
+          res.status(400).send({
+            error_Contact: 'Invalid Contact supplied'
+          })
+          break
+        default:
+          res.status(400).send({
+            error: 'Invalid Registration Supplied'
           })
       }
     }else{

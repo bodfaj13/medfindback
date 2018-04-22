@@ -49,6 +49,52 @@ module.exports = {
     });
   },
   callToCase(req, res, next) {
+    var emergencyId = req.body.emergencyId;
+    var ambulanceRequired = req.body.ambulanceRequired;
+    var ambulanceId= req.body.ambulanceId;
+    var updatedAt = moment().format("dddd, MMMM Do YYYY, h:mm:ss a"); 
+
+    var callId = {
+      _id: emergencyId
+    };
+
+    var caseDetails = {
+      ambulanceRequired: ambulanceRequired,
+      updatedAt: updatedAt,
+      active: true,
+      ambulanceId: ambulanceId
+    };
+
+    Emergency.findById(callId._id).then(function(data){
+      data.active = caseDetails.active;
+      data.ambulanceRequired = caseDetails.ambulanceRequired;
+      data.updatedAt = caseDetails.updatedAt;
+      data.ambulanceId = caseDetails.ambulanceId
+
+      data.save().then(function(data){
+        console.log(data)
+        res.send(data)
+      }).catch(function(error){
+        console.log(error.message);
+        res.status(400).send({
+          error: "Something went wrong"
+        });
+      });
+    }).catch(function(error){
+      console.log(error.message);
+      res.status(400).send({
+        error: "Something went wrong"
+      });
+    });
+  },
+  registerAmbulance(req, res, next) {
+    var assignedDriver = req.body.assignedDriver;
     
+    var createdAt = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
+
+    var ambulanceDetails = { 
+      assignedDriver: assignedDriver,
+      createdAt: createdAt
+    };
   }
 };

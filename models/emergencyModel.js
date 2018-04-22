@@ -33,18 +33,28 @@ var emergencySchema = mongoose.Schema({
   ambulanceRequired: {
     type: Number
   },
+  ambulanceId: [{
+    type: String
+  }],
   createdAt: {
     type: String
   },
-  lastUpdate: {
+  updatedAt: {
     type: String
   },
   active: {
     type: Boolean,
-    default: true
+    default: false,
+    required: true
+  },
+  emergencyDelivered: {
+    type: Boolean,
+    default: false,
+    required: true
   },
   note: {
-    type: String
+    type: String,
+    default: 'Null'
   }
 });
 
