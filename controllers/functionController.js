@@ -36,7 +36,7 @@ module.exports = {
       .then(function(data) {
       console.log(data);
       res.send({
-        success: true,
+        success: 'Call added successfully',
         entity: 'Emergency Call',
         callDetails: data
       });
@@ -62,6 +62,7 @@ module.exports = {
       ambulanceRequired: ambulanceRequired,
       updatedAt: updatedAt,
       active: true,
+      inSession: true,
       ambulanceId: ambulanceId
     };
 
@@ -70,10 +71,14 @@ module.exports = {
       data.ambulanceRequired = caseDetails.ambulanceRequired;
       data.updatedAt = caseDetails.updatedAt;
       data.ambulanceId = caseDetails.ambulanceId
+      data.inSession = caseDetails.inSession
 
       data.save().then(function(data){
-        console.log(data)
-        res.send(data)
+        console.log(data);
+        res.send({
+          success: "Case creaed successfully",
+          entity: "Emergency"
+        });
       }).catch(function(error){
         console.log(error.message);
         res.status(400).send({
@@ -87,14 +92,49 @@ module.exports = {
       });
     });
   },
-  registerAmbulance(req, res, next) {
+  createAmbulance(req, res, next) {
     var assignedDriver = req.body.assignedDriver;
-    
+    var plateNumber = req.body.plateNumber;
+    var vechileName = req.body.vechileName;
+    var vechileModel = req.body.vechileModel;
     var createdAt = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
 
     var ambulanceDetails = { 
       assignedDriver: assignedDriver,
+      plateNumber: plateNumber,
+      vechileModel: vechileModel,
+      vechileName: vechileName,
       createdAt: createdAt
     };
+
+    Ambulance.findOne({ plateNumber: ambulanceDetails.plateNumber })
+    .then(function(data) {
+      if (!data) {
+        var ambulance = new Ambulance(ambulanceDetails);
+        ambulance
+          .save()
+          .then(function(data) {
+          console.log(data);
+          res.send({
+            success: "Creation done successfully",
+            entity: 'Ambulance'
+          });
+        }) 
+        .catch(function(error) {
+          console.log(error.message);
+          res.status(400).send({
+            error: error
+          });
+        });
+      } else {
+        res.status(400).send({
+          error_PlateNumber: "Plate Number is already taken"
+        });
+      }
+    })
+    .catch(function(error) {
+      console.log(error);
+      res.status(400).send(error);
+    });
   }
 };

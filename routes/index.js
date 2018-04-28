@@ -5,9 +5,10 @@ const UserMsgController = require("../controllers/UserMsgController");
 const ControllerPolicy = require("../policies/ControllerPolicy");
 const jwt = require("jsonwebtoken");
 const appdetails = require("../config/appdetails.json");
-const FunctionController = require("../controllers/functionController");
+const FunctionController = require("../controllers/FunctionController");
 const moment = require('moment');
 const Admin = require('../models/adminModel');
+const DataController = require('../controllers/DataController');
 
 /* GET home page. */
 router.get("/", function(req, res, next) {
@@ -40,33 +41,35 @@ router.post(
   UserMsgController.sendMsg
 );
 
+//get-driver-no
+router.get("/api/getdriversno", DataController.getDriversNo);
+
+//get-driver-details
+router.get("/api/getdriversdetails", DataController.getDriverDetails);
+
+//get-ambulance-no
+router.get("/api/getambulanceno", DataController.getAmbulanceNo);
+
+//get-ambulance
+router.get("/api/getambulancedetails", DataController.getAmbulanceDetails);
+
+//get-calls
+router.get("/api/gettotalcallno", DataController.getTotalCallsNo);
+
+//get-total cases
+router.get("/api/gettotalcasesno", DataController.getTotalCasesNo);
+
+//get-total cases
+router.get("/api/getavailableambulanceno", DataController.getAvailableAmbulanceNo);
+
+//get-available-ambulance-no
+router.get("/api/getavailableambulanceno", DataController.getAvailableAmbulanceNo);
+
+//get-active-emergency-no
+router.get("/api/getactiveambulanceno", DataController.getActiveEmergencyNo);
 
 //route middleware to authenticate and check token
-router.use(function(req, res, next) {
-  // check header or url parameters or post parameters for token
-  var token = req.headers["x-auth"];
-  // decode token
-  if (token) {
-    // verifies secret and checks exp
-    try {
-      var decoded = jwt.verify(token, appdetails.jwtSecret);
-      req.decoded = decoded;
-      next();
-    } catch (err) {
-      return res.json({
-        success: false,
-        message: "Failed to authenticate token."
-      });
-    }
-  } else {
-    // if there is no token
-    // return an error
-    return res.status(403).send({
-      success: false,
-      message: "No token provided."
-    });
-  }
-});
+
 
 //checking explicitly
 router.get("/api/check", function(req, res) {
@@ -89,6 +92,12 @@ router.post(
 router.post(
   "/api/registerdriver",ControllerPolicy.registerDriver,
   AuthController.registerDriver
+);
+
+//create-driver
+router.post(
+  "/api/createambulance",
+  FunctionController.createAmbulance
 );
 
 module.exports = router;

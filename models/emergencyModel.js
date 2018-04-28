@@ -55,6 +55,11 @@ var emergencySchema = mongoose.Schema({
   note: {
     type: String,
     default: 'Null'
+  },
+  inSession: {
+    type: Boolean,
+    default: false,
+    required: true
   }
 });
 

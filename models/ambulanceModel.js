@@ -13,11 +13,10 @@ var ambulanceSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  plateNmber: {
-    type: String
-  },
-  engineNumber: {
-    type: String
+  plateNumber: {
+    type: String,
+    unique: true,
+    required: true
   },
   vechileName: {
     type: String
