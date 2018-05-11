@@ -1,0 +1,38 @@
+router.use(function(req, res, next) {
+  // check header or url parameters or post parameters for token
+  var token = req.headers["x-auth"];
+  // decode token
+  if (token) {
+    // verifies secret and checks exp
+    try {
+      var decoded = jwt.verify(token, appdetails.jwtSecret);
+      req.decoded = decoded;
+      next();
+    } catch (err) {
+      return res.json({
+        success: false,
+        message: "Failed to authenticate token."
+      });
+    }
+  } else {
+    // if there is no token
+    // return an error
+    return res.status(403).send({
+      success: false,
+      message: "No token provided."
+    });
+  }
+});
+
+
+
+
+
+beforeEnter: (to, from, next) => {
+  var isAuth = store.state.isAdminLoggedIn
+  if (isAuth === false) {
+    console.log('access denied!')
+    next('/')
+  }
+  next()
+}

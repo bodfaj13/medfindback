@@ -45,7 +45,7 @@ router.post(
 router.get("/api/getdriversno", DataController.getDriversNo);
 
 //get-driver-details
-router.get("/api/getdriversdetails", DataController.getDriverDetails);
+router.get("/api/getdriversavilableforassining", DataController.getDriverAvailbleForAssinging);
 
 //get-ambulance-no
 router.get("/api/getambulanceno", DataController.getAmbulanceNo);
@@ -64,6 +64,9 @@ router.get("/api/getavailableambulanceno", DataController.getAvailableAmbulanceN
 
 //get-available-ambulance-no
 router.get("/api/getavailableambulanceno", DataController.getAvailableAmbulanceNo);
+
+//get-available-ambulance-detils
+router.get("/api/getavailableambulancdetails", DataController.getAvailableAmbulanceDetails);
 
 //get-active-emergency-no
 router.get("/api/getactiveambulanceno", DataController.getActiveEmergencyNo);
@@ -98,6 +101,12 @@ router.post(
 router.post(
   "/api/createambulance",
   FunctionController.createAmbulance
+);
+
+//admin-update-pass
+router.post(
+  "/api/adminpassupdate",
+  AuthController.adminPassUpdate
 );
 
 module.exports = router;

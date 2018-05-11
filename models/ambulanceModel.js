@@ -13,6 +13,10 @@ var ambulanceSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  assignedDriverName: {
+    type: String,
+    required: true
+  },
   plateNumber: {
     type: String,
     unique: true,
@@ -36,7 +40,14 @@ var ambulanceSchema = mongoose.Schema({
   },
   paramedic: [{
     type: String
-  }]
+  }],
+  currentLocation: {
+    address: String,
+    cords: {
+      lat: String,
+      long: String
+    }
+  }
 });
 
 var Ambulance = mongoose.model("ambulances", ambulanceSchema);

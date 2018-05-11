@@ -17,8 +17,8 @@ module.exports = {
       });
     });
   },
-  getDriverDetails(req, res, next){
-    Driver.find().then(function(data){
+  getDriverAvailbleForAssinging(req, res, next){
+    Driver.find({isAvailable: true, onCase: false}).then(function(data){
       res.send({
         data: data
       });
@@ -85,6 +85,17 @@ module.exports = {
   },
   getActiveEmergencyNo(req, res, next){
     Emergency.count({inSession: true}).then(function(data){
+      res.send({
+        data: data
+      });
+    }).catch(function(error){
+      res.status(400).send({
+        error: "Something went wrong"
+      });
+    });
+  },
+  getAvailableAmbulanceDetails(req, res, next){
+    Ambulance.find({isAvailable: true}).then(function(data){
       res.send({
         data: data
       });

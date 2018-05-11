@@ -117,5 +117,31 @@ module.exports = {
     }else{
       next()
     }
+  },
+  adminPassUpdate (req, res, next){
+    const schema = {
+      formerPass: Joi.string(),
+      newPass: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/)
+    }
+    const {error, value} = Joi.validate(req.body, schema);
+    if(error){
+      switch(error.details[0].context.key){ 
+        case 'formerPass':
+          res.status(400).send({
+            error_formerPass: 'Invalid Password supplied'
+          })
+          break
+        case 'newPass':
+          res.status(400).send({
+            error_newPass: 'Invalid New Password supplied'
+          })
+        default:
+          res.status(400).send({
+            error: 'Invalid Update Supplied'
+          })
+      }
+    }else{
+      next()
+    }
   }
 }

@@ -110,20 +110,38 @@ module.exports = {
     Ambulance.findOne({ plateNumber: ambulanceDetails.plateNumber })
     .then(function(data) {
       if (!data) {
-        var ambulance = new Ambulance(ambulanceDetails);
-        ambulance
-          .save()
-          .then(function(data) {
-          console.log(data);
-          res.send({
-            success: "Creation done successfully",
-            entity: 'Ambulance'
+        Driver.findById(ambulanceDetails.assignedDriver)
+        .then(function(data){
+         data.isAvailable = false;
+         ambulanceDetails.assignedDriverName = data.fullName;
+         data.save().then(function(data){
+          var ambulance = new Ambulance(ambulanceDetails);
+            ambulance
+              .save()
+              .then(function(data) {
+              console.log(data);
+              res.send({
+                success: "Creation done successfully",
+                entity: 'Ambulance'
+              });
+            }) 
+            .catch(function(error) {
+              console.log(error.message);
+              res.status(400).send({
+                error: error
+              });
+            });
+          }).catch(function(error){
+            console.log(error.message);
+            res.status(400).send({
+              error: "Something went wrong"
+            });
           });
-        }) 
-        .catch(function(error) {
+        })
+        .catch(function(error){
           console.log(error.message);
           res.status(400).send({
-            error: error
+            error: "Something went wrong"
           });
         });
       } else {

@@ -188,5 +188,10 @@ module.exports = {
         console.log(error);
         res.status(400).send(error);
       });
+  },
+  adminPassUpdate(req, res, next){
+    var formerPass = req.body.formerPass;
+    var newPass = req.body.newPass;
+    
   }
 };
