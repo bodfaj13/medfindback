@@ -3,7 +3,7 @@ const Driver = require('../models/driverModel');
 const appdetails = require('../config/appdetails.json');
 const moment = require('moment');
 const Ambulance = require('../models/ambulanceModel');
-const Emergency = require('../models/emergencyModel')
+const Emergency = require('../models/emergencyModel');
 
 module.exports = {
   getDriversNo(req, res, next){
@@ -96,6 +96,39 @@ module.exports = {
   },
   getAvailableAmbulanceDetails(req, res, next){
     Ambulance.find({isAvailable: true}).then(function(data){
+      res.send({
+        data: data
+      });
+    }).catch(function(error){
+      res.status(400).send({
+        error: "Something went wrong"
+      });
+    });
+  },
+  getTotalCalls(req, res, next){
+    Emergency.find({active: false}).then(function(data){
+      res.send({
+        data: data
+      });
+    }).catch(function(error){
+      res.status(400).send({
+        error: "Something went wrong"
+      });
+    });
+  },
+  getTotalCases(req, res, next){
+    Emergency.find({active: true}).then(function(data){
+      res.send({
+        data: data
+      });
+    }).catch(function(error){
+      res.status(400).send({
+        error: "Something went wrong"
+      });
+    });
+  },
+  getActiveEmergency(req, res, next){
+    Emergency.find({inSession: true}).then(function(data){
       res.send({
         data: data
       });

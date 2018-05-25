@@ -1,4 +1,5 @@
 var mongoose = require('../config/mongoose');
+var Schema = mongoose.Schema;
 
 var emergencySchema = mongoose.Schema({
   callerName: {
@@ -34,7 +35,7 @@ var emergencySchema = mongoose.Schema({
     type: Number
   },
   ambulanceId: [{
-    type: String
+    type: Schema.Types.ObjectId
   }],
   createdAt: {
     type: String

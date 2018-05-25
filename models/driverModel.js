@@ -1,5 +1,6 @@
 var mongoose = require("../config/mongoose");
 var bcrypt = require("bcrypt");
+var Schema = mongoose.Schema;
 
 var driverSchema = mongoose.Schema({
   fullName: {
@@ -38,6 +39,9 @@ var driverSchema = mongoose.Schema({
   },
   gender: {
     type: String
+  },
+  assignedAmbulance: {
+    type: Schema.Types.ObjectId
   }
 });
 

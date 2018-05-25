@@ -8,13 +8,13 @@ const Ambulance = require('../models/ambulanceModel');
 
 module.exports = {
   registerAdmin(req, res, next){
-    var fullname = req.body.fullname;
+    var fullName = req.body.fullName;
     var email = req.body.email;
     var password = req.body.password;
     var createdAt = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
 
     var adminDetails = { 
-      fullName: fullname, 
+      fullName: fullName, 
       email: email, 
       password: password, 
       createdAt: createdAt 
@@ -193,5 +193,49 @@ module.exports = {
     var formerPass = req.body.formerPass;
     var newPass = req.body.newPass;
     
+    var Details = {
+      formerPass: formerPass,
+      newPass: newPass
+    };
+
+    var getDecoded = req.decoded.email;
+    Admin.findOne({email: getDecoded}).then(function(data){
+      bcrypt.compare(Details.formerPass, data.password, function(err,isMatch) {
+        if (err) throw err;
+          if (isMatch) {
+            if(Details.formerPass == Details.newPass){
+              res.status(400).send({
+                error: "New Password should be different"
+              });
+            }else{
+              bcrypt.hash(Details.newPass, 10, function(err, hash){
+                  if(err)throw err;
+                  data.password = hash;
+                  data.save().then(function(){
+                    console.log(data);
+                    res.send({
+                      success: "Password Updated Successfully",
+                      entity: "AdminPassReset"
+                    });
+                  }).catch(function(error){
+                    console.log(error.message);
+                    res.status(400).send({
+                      error: "Something went wrong"
+                    });
+                  });
+              });
+            }
+        } else {
+          res.status(403).send({
+            error_formerPass: "Incorrect Former Password"
+          });
+        }
+      });
+    }).catch(function(error){
+      console.log(error.message);
+        res.status(400).send({
+          error: "Something went wrong"
+        });
+    });
   }
-};
+}

@@ -1,4 +1,5 @@
 var mongoose = require("../config/mongoose");
+var Schema = mongoose.Schema;
 
 var ambulanceSchema = mongoose.Schema({
   isAvailable: {
@@ -10,7 +11,7 @@ var ambulanceSchema = mongoose.Schema({
     type: String
   }],
   assignedDriver: {
-    type: String,
+    type: Schema.Types.ObjectId,
     required: true
   },
   assignedDriverName: {
@@ -39,7 +40,7 @@ var ambulanceSchema = mongoose.Schema({
     type: String
   },
   paramedic: [{
-    type: String
+    type: Schema.Types.ObjectId
   }],
   currentLocation: {
     address: String,

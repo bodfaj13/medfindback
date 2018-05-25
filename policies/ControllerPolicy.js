@@ -121,7 +121,7 @@ module.exports = {
   adminPassUpdate (req, res, next){
     const schema = {
       formerPass: Joi.string(),
-      newPass: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/)
+      newPass: Joi.string()
     }
     const {error, value} = Joi.validate(req.body, schema);
     if(error){

@@ -72,7 +72,7 @@ module.exports = {
       data.updatedAt = caseDetails.updatedAt;
       data.ambulanceId = caseDetails.ambulanceId
       data.inSession = caseDetails.inSession
-
+      
       data.save().then(function(data){
         console.log(data);
         res.send({
